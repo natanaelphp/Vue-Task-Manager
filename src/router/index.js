@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: require('@/components/Home')
+      component: require('@/components/task/list')
     }
   ]
 })
