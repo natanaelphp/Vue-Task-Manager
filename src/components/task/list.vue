@@ -3,7 +3,7 @@
 
     <b-field grouped>
       <p class="control">
-        <button class="button is-success">New task</button>
+        <router-link to="/new" class="button is-success">New task</router-link>
       </p>
       <b-input icon="search" expanded></b-input>
     </b-field>
@@ -47,15 +47,6 @@
 </script>
 
 <style>
-  .task-list {
-    margin: 4% 4%;
-  }
-  @media (min-width: 500px) {
-    .task-list {
-      margin: 5% 15%;
-    }
-  }
-
   a {
     color: #000;
   }

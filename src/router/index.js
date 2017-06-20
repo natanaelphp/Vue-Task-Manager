@@ -8,6 +8,10 @@ export default new Router({
     {
       path: '/',
       component: require('@/components/task/list')
-    }
+    },
+    {
+      path: '/new',
+      component: require('@/components/task/new')
+    },
   ]
 })
