@@ -18,7 +18,7 @@
         </b-table-column>
         <b-table-column label="Operations" width="200">
           <router-link to="/"><b-icon icon="delete" class="is-danger option"></b-icon></router-link>
-          <router-link to="/"><b-icon icon="edit" class="is-warning option"></b-icon></router-link>
+          <router-link :to="'/edit/'+tasks.index"><b-icon icon="edit" class="is-warning option"></b-icon></router-link>
           <a v-on:click="tasks.row.open = !tasks.row.open"><b-icon icon="list" class="is-default option"></b-icon></a>
           <router-link to="/"><b-icon icon="done" class="is-success option"></b-icon></router-link>
         </b-table-column>
