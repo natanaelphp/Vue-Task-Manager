@@ -17,7 +17,7 @@
           <pre v-show="tasks.row.open">{{ tasks.row.description }}</pre>
         </b-table-column>
         <b-table-column label="Operations" width="200">
-          <router-link to="/"><b-icon icon="delete" class="is-danger option"></b-icon></router-link>
+          <a v-on:click="deleteTask(tasks.row)"><b-icon icon="delete" class="is-danger option"></b-icon></a>
           <router-link :to="'/edit/'+tasks.index"><b-icon icon="edit" class="is-warning option"></b-icon></router-link>
           <a v-on:click="tasks.row.open = !tasks.row.open"><b-icon icon="list" class="is-default option"></b-icon></a>
           <router-link to="/"><b-icon icon="done" class="is-success option"></b-icon></router-link>
@@ -34,7 +34,19 @@
   import { mapState } from 'vuex'
 
   export default {
-    computed: mapState(['tasks'])
+    computed: mapState(['tasks']),
+    methods: {
+      deleteTask (task) {
+        this.$dialog.confirm({
+          title: 'Delete task',
+          message: 'Are you sure to delete this task? <br><br>' + task.title,
+          onConfirm: () => {
+            this.$store.commit('DELETE_TASK', task)
+            this.$toast.open('Task deleted')
+          }
+        })
+      }
+    }
   }
 </script>
 
