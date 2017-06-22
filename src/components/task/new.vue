@@ -23,12 +23,14 @@
         task: {
           title: '',
           description: '',
+          open: false,
         }
       }
     },
     methods: {
       save(task) {
-        console.log(task);
+        this.$store.commit('NEW_TASK', task)
+        this.$router.push('/')
       }
     }
   }
