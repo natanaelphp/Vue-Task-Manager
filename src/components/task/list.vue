@@ -10,17 +10,17 @@
 
     <b-table :data="tasks">
 
-      <template scope="tasks">
+      <template scope="task">
 
         <b-table-column field="title" label="Title" sortable>
-          {{ tasks.row.title }}
-          <pre v-show="tasks.row.open">{{ tasks.row.description }}</pre>
+          {{ task.row.title }}
+          <pre v-show="task.row.open">{{ task.row.description }}</pre>
         </b-table-column>
         <b-table-column label="Operations" width="200">
-          <a v-on:click="deleteTask(tasks.row)"><b-icon icon="delete" class="is-danger option"></b-icon></a>
-          <router-link :to="'/edit/'+tasks.index"><b-icon icon="edit" class="is-warning option"></b-icon></router-link>
-          <a v-on:click="tasks.row.open = !tasks.row.open"><b-icon icon="list" class="is-default option"></b-icon></a>
-          <router-link to="/"><b-icon icon="done" class="is-success option"></b-icon></router-link>
+          <a v-on:click="deleteTask(task.row)"><b-icon icon="delete" class="is-danger option"></b-icon></a>
+          <a v-on:click="updateTask(task.index)"><b-icon icon="edit" class="is-warning option"></b-icon></a>
+          <a v-on:click="toogleOpen(task.row)"><b-icon icon="list" class="is-default option"></b-icon></a>
+          <a v-on:click="toogleDone(task.row)"><b-icon icon="done" class="is-success option"></b-icon></a>
         </b-table-column>
 
       </template>
@@ -45,6 +45,18 @@
             this.$toast.open('Task deleted')
           }
         })
+      },
+
+      updateTask (index) {
+        this.$router.push('/edit/' + index)
+      },
+
+      toogleOpen (task) {
+        task.open = !task.open
+      },
+
+      toogleDone (task) {
+        // TODO: Implement
       }
     }
   }
