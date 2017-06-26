@@ -12,9 +12,9 @@
 
       <template scope="task">
 
-        <b-table-column field="title" label="Title" sortable>
+        <b-table-column field="title" label="Title" sortable :class="{'text-muted': task.row.done}">
           {{ task.row.title }}
-          <pre v-show="task.row.open">{{ task.row.description }}</pre>
+          <div v-show="task.row.open">{{ task.row.description }}</div>
         </b-table-column>
         <b-table-column label="Operations" width="200">
           <a v-on:click="deleteTask(task.row)"><b-icon icon="delete" class="is-danger option"></b-icon></a>
@@ -56,7 +56,7 @@
       },
 
       toogleDone (task) {
-        // TODO: Implement
+        task.done = !task.done
       }
     }
   }
@@ -69,5 +69,10 @@
 
   .option {
     margin-left: 16px;
+  }
+
+  .text-muted {
+    text-decoration: line-through;
+    color: #c0c0c0;
   }
 </style>
