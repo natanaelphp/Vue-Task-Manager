@@ -24,6 +24,7 @@
           title: '',
           description: '',
           open: false,
+          done: false,
         }
       }
     },
