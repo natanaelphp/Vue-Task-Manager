@@ -18,7 +18,7 @@
         </b-table-column>
         <b-table-column label="Operations" width="200">
           <a v-on:click="deleteTask(task.row)"><b-icon icon="delete" class="is-danger option"></b-icon></a>
-          <a v-on:click="updateTask(task.index)"><b-icon icon="edit" class="is-warning option"></b-icon></a>
+          <a v-on:click="updateTask(task.row)"><b-icon icon="edit" class="is-warning option"></b-icon></a>
           <a v-on:click="toogleOpen(task.row)"><b-icon icon="list" class="is-default option"></b-icon></a>
           <a v-on:click="toogleDone(task.row)"><b-icon icon="done" class="is-success option"></b-icon></a>
         </b-table-column>
@@ -56,7 +56,8 @@
         })
       },
 
-      updateTask (index) {
+      updateTask (task) {        
+        const index = this.tasks.indexOf(task)
         this.$router.push('/edit/' + index)
       },
 
