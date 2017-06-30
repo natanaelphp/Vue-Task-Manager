@@ -5,10 +5,10 @@
       <p class="control">
         <router-link to="/new" class="button is-success">New task</router-link>
       </p>
-      <b-input icon="search" expanded></b-input>
+      <b-input icon="search" v-model="filter.search" expanded></b-input>
     </b-field>
 
-    <b-table :data="tasks">
+    <b-table :data="tasksFilteredBySearch">
 
       <template scope="task">
 
@@ -32,9 +32,18 @@
 
 <script>
   import { mapState } from 'vuex'
+  import { contains } from '@/helpers/strings'
+  import { filter } from 'lodash'
 
   export default {
-    computed: mapState(['tasks']),
+    computed: {
+      ...mapState(['tasks', 'filter']),
+
+      tasksFilteredBySearch () {
+        const byTitle = task => contains(task.title, this.filter.search)
+        return filter(this.tasks, byTitle)
+      },
+    },
     methods: {
       deleteTask (task) {
         this.$dialog.confirm({

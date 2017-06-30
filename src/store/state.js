@@ -5,5 +5,8 @@ export default {
     {'id':3, title: 'Task 4', description: 'Test', open: false, done: false},
     {'id':4, title: 'Task', description: 'Test', open: false, done: false},
     {'id':5, title: 'Task', description: 'Test', open: false, done: false},
-  ]
+  ],
+  filter: {
+    search: '',
+  }
 }
