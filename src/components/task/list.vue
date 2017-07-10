@@ -5,16 +5,32 @@
       <p class="control">
         <router-link to="/new" class="button is-success">New task</router-link>
       </p>
-      <b-input icon="search" v-model="filter.search" expanded></b-input>
+      <button class="button is-default" v-on:click="control.showTagFilter = !control.showTagFilter">Tags Filters</button>
+      <b-input icon="search" class="option" v-model="filter.search" expanded></b-input>
     </b-field>
 
-    <b-table :data="tasksFilteredBySearch">
+    <b-checkbox-group class="control message message-body" v-model="filter.tags" v-show="control.showTagFilter">
+      <div class="is-pulled-right">
+        <button class="button is-default" v-on:click="filter.tags = tags">Select All</button>
+        <button class="button is-default" v-on:click="filter.tags = []">Clear All</button>
+      </div>
+      <div v-for="tag in tags">
+        <b-checkbox :custom-value="tag" :key="tag" style="margin-bottom: 8px">
+          <span :class="'tag is-'+tag">{{ tag }}</span>
+        </b-checkbox>
+      </div>
+    </b-checkbox-group>
+
+    <b-table :data="tasksFilteredBySearchAndTags">
 
       <template scope="task">
 
         <b-table-column field="title" label="Title" sortable :class="{'text-muted': task.row.done}">
           {{ task.row.title }}
           <div v-show="task.row.open">{{ task.row.description }}</div>
+        </b-table-column>
+        <b-table-column label="Tags" width="180">
+          <span v-for="tag in task.row.tags" :class="'tag is-'+tag" style="margin-right: 4px"></span>
         </b-table-column>
         <b-table-column label="Operations" width="200">
           <a v-on:click="deleteTask(task.row)"><b-icon icon="delete" class="is-danger option"></b-icon></a>
@@ -33,16 +49,29 @@
 <script>
   import { mapState } from 'vuex'
   import { contains } from '@/helpers/strings'
-  import { filter } from 'lodash'
+  import { filter, intersection } from 'lodash'
 
   export default {
+    data () {
+      return {
+        control: {
+          showTagFilter: false,
+        }
+      }
+    },
     computed: {
-      ...mapState(['tasks', 'filter']),
+      ...mapState(['tasks', 'filter', 'tags']),
 
       tasksFilteredBySearch () {
-        const byTitle = task => contains(task.title, this.filter.search)
-        return filter(this.tasks, byTitle)
+        const byTitleOrDescription = task => contains(task.title + task.description, this.filter.search)
+        return filter(this.tasks, byTitleOrDescription)
       },
+
+      tasksFilteredBySearchAndTags () {
+        let tasks = this.tasksFilteredBySearch
+        const byTags = task => intersection(task.tags, this.filter.tags).length
+        return filter(tasks, byTags)
+      }
     },
     methods: {
       deleteTask (task) {
@@ -56,7 +85,7 @@
         })
       },
 
-      updateTask (task) {        
+      updateTask (task) {
         const index = this.tasks.indexOf(task)
         this.$router.push('/edit/' + index)
       },
