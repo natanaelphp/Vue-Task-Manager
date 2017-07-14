@@ -92,10 +92,12 @@
 
       toogleOpen (task) {
         task.open = !task.open
+        this.$store.commit('EDIT_TASK', task)
       },
 
       toogleDone (task) {
         task.done = !task.done
+        this.$store.commit('EDIT_TASK', task)
       }
     }
   }
