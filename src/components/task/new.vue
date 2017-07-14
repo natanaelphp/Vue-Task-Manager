@@ -3,20 +3,20 @@
 
     <router-link to="/" class="button">Back</router-link>
     <hr>
-    <b-field>
-      <b-input placeholder="Title" minlength="3" v-model="task.title"></b-input>
-    </b-field>
-    <b-field>
-      <b-input type="textarea" minlength="3" maxlength="1000" placeholder="Description" v-model="task.description"></b-input>
-    </b-field>
-    <b-checkbox-group class="control message message-body" v-model="task.tags">
-      <b-checkbox :custom-value="tag" :key="tag" v-for="tag in tags" style="margin-right: 14px">
-        <span :class="'tag is-'+tag">{{ tag }}</span>
-      </b-checkbox>
-    </b-checkbox-group>
-    <button class="button is-primary is-fullwidth" v-on:click="save(task)">
-      Create new task
-    </button>
+    <form v-on:submit.prevent="save(task)">
+      <b-field>
+        <b-input placeholder="Title" minlength="3" v-model="task.title"></b-input>
+      </b-field>
+      <b-field>
+        <b-input type="textarea" minlength="3" maxlength="1000" placeholder="Description" v-model="task.description"></b-input>
+      </b-field>
+      <b-checkbox-group class="control message message-body" v-model="task.tags">
+        <b-checkbox :custom-value="tag" :key="tag" v-for="tag in tags" style="margin-right: 14px">
+          <span :class="'tag is-'+tag">{{ tag }}</span>
+        </b-checkbox>
+      </b-checkbox-group>
+      <input type="submit" class="button is-primary is-fullwidth" value="Create new task">
+    </form>
 
   </div>
 </template>
